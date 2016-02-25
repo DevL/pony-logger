@@ -21,19 +21,21 @@ actor Logger
     output.print(message)
 
   be debug(message: String) =>
-    _maybe_log(Debug() + ": " + message, Debug)
+    _maybe_log(message, Debug)
 
   be info(message: String) =>
-    _maybe_log(Info() + ": " + message, Info)
+    _maybe_log(message, Info)
 
   be warn(message: String) =>
-    _maybe_log(Warning() + ": " + message, Warning)
+    _maybe_log(message, Warning)
 
   be fail(message: String) =>
-    _maybe_log(Failure() + ": " + message, Failure)
+    _maybe_log(message, Failure)
 
   fun _maybe_log(message: String, message_level: LogLevel) =>
-    if _should_log(message_level) then log(message) end
+    if _should_log(message_level) then
+      log(message_level() + ": " + message)
+    end
 
   fun _should_log(message_level: LogLevel) : Bool =>
     match (message_level(), level())
