@@ -4,11 +4,13 @@ primitive Warning fun apply(): String => "WARN"
 primitive Failure fun apply(): String => "FAIL"
 type LogLevel is (Debug | Info | Warning | Failure)
 
+type Output is (StdStream | OutStream)
+
 actor Logger
-  let output: StdStream
+  let output: Output
   var level: LogLevel
 
-  new create(output': StdStream, level': LogLevel = Info) =>
+  new create(output': Output, level': LogLevel = Info) =>
     output = output'
     level = level'
 
